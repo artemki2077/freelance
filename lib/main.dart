@@ -81,20 +81,10 @@ class Jobs extends StatefulWidget {
 
 class _JobsState extends State<Jobs> {
   List<List<dynamic>> jobs = [];
-  List<List<dynamic>> nick_emp = [];
-  List employers = [];
 
   getData() async {
     jobs = await glob.connection
         .query('SELECT * from jobs where not jobs.finished');
-    jobs.forEach(((element) {
-      employers.add(element[2]);
-    }));
-    var set_nicks = employers.toSet();
-    nick_emp = await glob.connection
-        .query(set_nicks.length > 1
-        ? 'SELECT * from Employers where Employers.id in (${set_nicks.toString().substring(1, set_nicks.toString().length - 1)})'
-        : 'SELECT * from Employers where Employers.id = ${set_nicks.toList()[0]}');
     setState(() {});
   }
 
